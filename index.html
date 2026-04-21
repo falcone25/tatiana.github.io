@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Татьяна Калинина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8F5F0;
+    --fg: #1A1816;
+    --muted: #7A7168;
+    --accent: #8B4A3C;
+    --accent-light: #E8D5CF;
+    --border: #DDD8D0;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    transition: opacity 0.3s;
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    padding: 140px 0 80px;
+  }
+
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(44px, 7vw, 72px);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .hero-desc {
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  .hero-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 48px;
+  }
+
+  .role-tag {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 2px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    background: var(--accent);
+    color: #F8F5F0;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .cta-btn:hover {
+    background: #6F3A2E;
+    transform: translateY(-1px);
+  }
+
+  /* SECTION GENERAL */
+  section {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 40px;
+    background: var(--accent-light);
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 40px;
+    max-width: 560px;
+  }
+
+  .section-title em { font-style: italic; }
+
+  /* SERVICES */
+  .service-block {
+    margin-bottom: 56px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .service-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .service-block.visible { opacity: 1; transform: none; }
+
+  .service-number {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--accent-light);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .service-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .service-desc {
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.75;
+  }
+
+  .service-formats {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .service-formats li {
+    font-size: 14px;
+    color: var(--fg);
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .service-formats li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* PUBLICATIONS */
+  .pub-list { list-style: none; }
+
+  .pub-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .pub-item.visible { opacity: 1; transform: none; }
+
+  .pub-outlet {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .pub-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--fg);
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+  }
+
+  .pub-title:hover { color: var(--accent); }
+
+  .pub-date {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  /* EXPERIENCE */
+  .exp-grid {
+    display: grid;
+    gap: 32px;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .exp-item.visible { opacity: 1; transform: none; }
+
+  .exp-years {
+    font-size: 13px;
+    color: var(--muted);
+    padding-top: 3px;
+    line-height: 1.4;
+  }
+
+  .exp-org {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    line-height: 1.25;
+  }
+
+  .exp-role { font-size: 14px; color: var(--muted); }
+
+  /* VALUES */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+  }
+
+  .value-item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .value-item.visible { opacity: 1; transform: none; }
+
+  .value-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--accent-light);
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+
+  .value-title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+    color: var(--fg);
+  }
+
+  .value-text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid;
+    gap: 32px;
+  }
+
+  .testimonial-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .testimonial-card.visible { opacity: 1; transform: none; }
+
+  .testimonial-quote {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    color: var(--fg);
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .author-photo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    object-fit: cover;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--accent);
+  }
+
+  .author-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg);
+    margin-bottom: 2px;
+  }
+
+  .author-title { font-size: 13px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .contact-section .section-label { color: var(--accent-light); }
+  .contact-section .section-label::after { background: var(--accent); }
+
+  .contact-section .section-title { color: var(--bg); }
+
+  .contact-desc {
+    color: #C8C2BA;
+    font-size: 17px;
+    line-height: 1.7;
+    max-width: 500px;
+    margin-bottom: 40px;
+  }
+
+  .contact-link {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border: 1px solid #4A4640;
+    color: var(--bg);
+    text-decoration: none;
+    border-radius: 2px;
+    margin-right: 16px;
+    margin-bottom: 12px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .contact-link:hover { background: rgba(255,255,255,0.06); border-color: #7A7168; }
+  .contact-link.primary { background: var(--accent); border-color: var(--accent); }
+  .contact-link.primary:hover { background: #6F3A2E; border-color: #6F3A2E; }
+
+  /* FOOTER */
+  footer {
+    background: var(--fg);
+    color: var(--muted);
+    border-top: 1px solid #2A2820;
+    padding: 24px 0;
+    font-size: 13px;
+  }
+
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 110px 0 60px; }
+    .nav-links { display: none; }
+    .exp-item { grid-template-columns: 1fr; gap: 4px; }
+    .exp-years { font-size: 12px; }
+    .pub-item { grid-template-columns: 1fr; }
+    .pub-date { display: none; }
+    footer .container { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="nav-name" href="#">Татьяна Калинина</a>
+    <ul class="nav-links">
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#publications">Тексты</a></li>
+      <li><a href="#experience">Опыт</a></li>
+      <li><a href="#testimonials">Отзывы</a></li>
+      <li><a href="#contact">Контакт</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="container">
+  <div class="hero">
+    <p class="hero-eyebrow">Фасилитаторка · Журналистка · Исследовательница</p>
+    <h1>Сложные&nbsp;обсуждения —<br><em>ясные решения</em></h1>
+    <p class="hero-desc">Помогаю командам и сообществам превращать противоречия в работающие стратегии в условиях неопределённости.</p>
+    <div class="hero-roles">
+      <span class="role-tag">Фасилитация</span>
+      <span class="role-tag">Аналитические тексты</span>
+      <span class="role-tag">Развитие сообществ</span>
+      <span class="role-tag">Тренинги</span>
+      <span class="role-tag">Права женщин и квир-людей</span>
+    </div>
+    <a href="#contact" class="cta-btn">Обсудить сотрудничество</a>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <p class="section-label">Чем могу помочь</p>
+
+    <div class="service-block">
+      <div class="service-number">01</div>
+      <h3 class="service-title">Фасилитация и проектирование коллективных обсуждений</h3>
+      <p class="service-desc">С 2020 года проектирую и провожу стратегические, командные и публичные обсуждения для организаций, сообществ и команд. Глубоко погружаюсь в контекст задачи и выстраиваю процесс под конкретную ситуацию, учитывая цели, внутреннюю динамику, ограничения и чувствительность контекста. Большой опыт работы с некоммерческими и социальными проектами, в том числе с уязвимыми группами.</p>
+      <ul class="service-formats">
+        <li>Стратегические сессии и процессы организационного развития</li>
+        <li>Командные обсуждения и рабочие встречи</li>
+        <li>Ретроспективы и рефлексивные форматы</li>
+        <li>Фасилитация сложных и конфликтных обсуждений</li>
+        <li>Сопровождение циклов стратегической работы</li>
+        <li>Модерация публичных дискуссий и экспертных мероприятий</li>
+      </ul>
+    </div>
+
+    <div class="service-block">
+      <div class="service-number">02</div>
+      <h3 class="service-title">Авторские статьи для медиа и просветительских проектов</h3>
+      <p class="service-desc">Пишу глубокие аналитические и просветительские тексты по социальным, политическим и культурным темам. Особенно сильна в темах, связанных с феминизмом, ЛГБТК+, активизмом, социальной философией, историей общественных движений. Академический бэкграунд в истории и многолетняя практика аналитической работы позволяют мне создавать тексты, которые помогают читателю разобраться в сложном контексте без потери глубины.</p>
+    </div>
+
+    <div class="service-block">
+      <div class="service-number">03</div>
+      <h3 class="service-title">Консалтинг по развитию сообществ и волонтёрских команд</h3>
+      <p class="service-desc">Консультирую команды и проекты, которые развивают сообщества, работают с волонтёрами или выстраивают коллективные формы участия. Помогаю создавать устойчивые структуры, в которых людям понятно, как включаться в работу и брать на себя ответственность. Также консультирую редакции и авторские проекты по квир-инклюзивному языку и чувствительной коммуникации.</p>
+    </div>
+
+    <div class="service-block">
+      <div class="service-number">04</div>
+      <h3 class="service-title">Тренинги и образовательные программы</h3>
+      <p class="service-desc">Разрабатываю и провожу образовательные программы для команд, сообществ и специалистов, которые работают с людьми и коллективными процессами. Передаю системное понимание работы с группами, а не только отдельные техники. Каждую программу разрабатываю под конкретный запрос и контекст.</p>
+      <ul class="service-formats">
+        <li>Проектирование обсуждений, которые дают команде ясность и план действий</li>
+        <li>Работа с групповой динамикой и конфликтами</li>
+        <li>Культура встреч и коллективные решения</li>
+        <li>Фасилитационный подход в лидерстве</li>
+        <li>Устойчивые сообщества и волонтёрские команды</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="container">
+    <p class="section-label">Избранные публикации</p>
+    <h2 class="section-title">Тексты, <em>которые я написала</em></h2>
+
+    <ul class="pub-list">
+      <li class="pub-item">
+        <div>
+          <p class="pub-outlet">Новая Газета Европа</p>
+          <a class="pub-title" href="https://novayagazeta.eu/articles/2026/04/10/ochen-ne-khochetsia-teriat-eto-oshchushchenie-schastia" target="_blank">«Очень не хочется терять это ощущение счастья». Истории квир-россиян, которые поженились в Нидерландах</a>
+        </div>
+        <span class="pub-date">Апрель 2026</span>
+      </li>
+      <li class="pub-item">
+        <div>
+          <p class="pub-outlet">Новая Газета Европа</p>
+          <a class="pub-title" href="https://novayagazeta.eu/articles/2025/12/28/millionnye-shtrafy-sotni-ugolovnykh-del-odna-zhizn" target="_blank">Миллионные штрафы, сотни уголовных дел, одна жизнь. Как квир-люди «расплачивались» за своё существование в России</a>
+        </div>
+        <span class="pub-date">Декабрь 2025</span>
+      </li>
+      <li class="pub-item">
+        <div>
+          <p class="pub-outlet">Новая Газета Европа</p>
+          <a class="pub-title" href="https://novayagazeta.eu/articles/2025/04/26/politicheskoe-lesbiistvo-radikalnyi-vyzov-patriarkhatu" target="_blank">Политическое лесбийство: радикальный вызов патриархату</a>
+        </div>
+        <span class="pub-date">Апрель 2025</span>
+      </li>
+      <li class="pub-item">
+        <div>
+          <p class="pub-outlet">Perito</p>
+          <a class="pub-title" href="https://perito.media/posts/tyurmy-sport-tualety-pochemu-radikalnye-feministki-soglasny-s-trampom" target="_blank">Тюрьмы, спорт, туалеты: почему радикальные феминистки согласны с Трампом?</a>
+        </div>
+        <span class="pub-date">Март 2025</span>
+      </li>
+      <li class="pub-item">
+        <div>
+          <p class="pub-outlet">Послемедиа</p>
+          <a class="pub-title" href="https://www.posle.media/article/odnazhdy-zhenshchiny-sedyat-kreml" target="_blank">«Однажды женщины съедят Кремль». Как живут лесбиянки в России в условиях военного времени</a>
+        </div>
+        <span class="pub-date">Октябрь 2025</span>
+      </li>
+      <li class="pub-item">
+        <div>
+          <p class="pub-outlet">Гласная</p>
+          <a class="pub-title" href="https://glasnaya.media/glossary/bolshe-ne-hochu-otnoshenij/" target="_blank">«Больше не хочу отношений». Что такое гетеропессимизм и почему женщины отказываются от новых романтических связей</a>
+        </div>
+        <span class="pub-date">2025</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <p class="section-label">Опыт</p>
+    <h2 class="section-title"><em>Проекты,</em> в которых я работала</h2>
+
+    <div class="exp-grid">
+      <div class="exp-item">
+        <div class="exp-years">2023 — н.в.</div>
+        <div>
+          <div class="exp-org">Cheers Queers</div>
+          <div class="exp-role">Соосновательница и стратегическая лидерка. Крупнейшее русскоязычное лесбийское сообщество. Развитие сообщества, образовательное направление, финансовая устойчивость.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-years">2025 — н.в.</div>
+        <div>
+          <div class="exp-org">Лес рук</div>
+          <div class="exp-role">Соосновательница и авторка. Образовательная медиаплатформа о сапфической культуре для русскоязычной аудитории.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-years">2024–2025</div>
+        <div>
+          <div class="exp-org">Насилию.нет</div>
+          <div class="exp-role">Развитие волонтёрского направления, проектирование образовательных программ, фасилитация командных процессов, Совет директоров.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-years">2023–2025</div>
+        <div>
+          <div class="exp-org">Лабиринт</div>
+          <div class="exp-role">Руководство развитием проекта поддержки русскоязычных женщин, столкнувшихся с насилием в эмиграции.</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-years">2020–2022</div>
+        <div>
+          <div class="exp-org">No Flowers</div>
+          <div class="exp-role">Создательница. Первый феминистский благотворительный офлайн-фестиваль во Владимире. Программное и организационное продюсирование.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section id="values">
+  <div class="container">
+    <p class="section-label">На что я опираюсь</p>
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-num">1</div>
+        <div class="value-title">Уважительное любопытство</div>
+        <div class="value-text">Искренний интерес к историям и опыту других открывает путь к взаимопониманию и поддерживающему диалогу.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">2</div>
+        <div class="value-title">Образование как инструмент изменений</div>
+        <div class="value-text">Через обучение и совместное исследование мы можем менять общественные структуры и создавать более справедливую реальность.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">3</div>
+        <div class="value-title">Сила коллективности</div>
+        <div class="value-text">Объединение людей вокруг общих целей и забота друг о друге делают возможными устойчивые изменения.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">4</div>
+        <div class="value-title">Чувствительность к дисбалансу власти</div>
+        <div class="value-text">Власть и дискриминация влияют на взаимодействие людей и их решения — это необходимо видеть и учитывать.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">5</div>
+        <div class="value-title">Коммуникация против насилия</div>
+        <div class="value-text">Изменение подходов к коммуникации способно снижать уровень насилия и создавать пространство для понимания.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-num">6</div>
+        <div class="value-title">Комическое как пространство жизни</div>
+        <div class="value-text">Юмор освобождает от тяжести навязанных норм и создаёт пространство для подлинной — свободной и творческой — жизни.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <p class="section-label">Что говорят коллеги</p>
+    <h2 class="section-title"><em>Отзывы</em> о работе</h2>
+
+    <div class="testimonials-grid">
+      <!-- Testimonial 1 — placeholder -->
+      <div class="testimonial-card">
+        <p class="testimonial-quote">«Здесь будет отзыв от коллеги или клиента — добавьте фотографию, имя и должность.»</p>
+        <div class="testimonial-author">
+          <div class="author-photo">ИФ</div>
+          <div>
+            <div class="author-name">Имя Фамилия</div>
+            <div class="author-title">Должность, организация</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 — placeholder -->
+      <div class="testimonial-card">
+        <p class="testimonial-quote">«Здесь будет второй отзыв. Замените текст-заглушку на настоящие слова ваших коллег.»</p>
+        <div class="testimonial-author">
+          <div class="author-photo">ИФ</div>
+          <div>
+            <div class="author-name">Имя Фамилия</div>
+            <div class="author-title">Должность, организация</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section" style="background: var(--fg); border-top: none;">
+  <div class="container">
+    <p class="section-label" style="color: var(--accent-light);">Сотрудничество</p>
+    <h2 class="section-title" style="color: var(--bg);">Готовы обсудить <em>вашу задачу?</em></h2>
+    <p class="contact-desc">Напишите мне о вашей задаче, контексте и текущем запросе. На основе этого я предложу возможный формат работы или честно скажу, если вам подойдёт другой тип экспертизы.</p>
+    <div>
+      <a href="mailto:ваш@email.com" class="contact-link primary">Написать письмо</a>
+      <a href="https://t.me/ваш_телеграм" class="contact-link" target="_blank">Telegram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Татьяна Калинина</span>
+    <span style="color: #4A4640;">Фасилитаторка · Журналистка · Исследовательница</span>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.service-block, .pub-item, .exp-item, .value-item, .testimonial-card')
+    .forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
